@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<body>
+
+<h2>To Do List</h2>
+
+<input type="text" id="taskInput" placeholder="Masukkan tugas">
+<button onclick="tambahTask()">Tambah</button>
+
+<ul id="list"></ul>
+
+<script>
+function tambahTask() {
+    let input = document.getElementById("taskInput");
+    let task = input.value;
+
+    if (task === "") return;
+
+    let li = document.createElement("li");
+
+    li.innerHTML = `
+        <span>${task}</span>
+        <button onclick="editTask(this)">Edit</button>
+        <button onclick="hapusTask(this)">Hapus</button>
+    `;
+
+    document.getElementById("list").appendChild(li);
+    input.value = "";
+}
+
+function hapusTask(btn) {
+    btn.parentElement.remove();
+}
+
+function editTask(btn) {
+    let li = btn.parentElement;
+    let span = li.querySelector("span");
+    let teksLama = span.innerText;
+
+    li.innerHTML = `
+        <input type="text" value="${teksLama}" id="editInput">
+        <button onclick="saveTask(this)">Save</button>
+        <button onclick="hapusTask(this)">Hapus</button>
+    `;
+}
+
+function saveTask(btn) {
+    let li = btn.parentElement;
+    let input = li.querySelector("input");
+    let teksBaru = input.value;
+
+    li.innerHTML = `
+        <span>${teksBaru}</span>
+        <button onclick="editTask(this)">Edit</button>
+        <button onclick="hapusTask(this)">Hapus</button>
+    `;
+}
+</script>
+
+</body>
+</html>
